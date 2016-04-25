@@ -9,7 +9,7 @@ Reproduction of some of the results from the recent [MSRA ResNet](https://arxiv.
 | ResNet-110 | 6.37 | 6.38 |
 | ResNet-164 | 5.46 | Still Running |
 
-**Note** ResNet-110 is the stacked 3x3 filter variant and ResNet-164 is the 'botttleneck' architecture. Both use the new pre-activation units as proposed in the paper.
+**Note:** ResNet-110 is the stacked 3x3 filter variant and ResNet-164 is the 'botttleneck' architecture. Both use the new pre-activation units as proposed in the paper.
 
 ## Implementation details
 
