@@ -13,7 +13,9 @@ Note - ResNet-110 is the stacked 3x3 filter variant and ResNet-164 is the 'bottt
 
 ## Implementation details
 
-There are a few small differences in my implementation and that of the paper. I am using a smaller batch size because of hardware constraints, 32 instead of 128. I am also using a lower initial learning rate 0.01 instead of 0.1, I find it to be more stable. These changes show that the ResNet architecture is robust so small hyperparameter tweaks. My data augmentation is exactly the same, only translations by padding then copping and left-right flipping.
+There are a few small differences in my implementation and that of the paper. I am using a smaller batch size because of hardware constraints, 32 instead of 128. I am also using a lower initial learning rate 0.01 instead of 0.1, I find it to be more stable. My data augmentation is exactly the same, only translations by padding then copping and left-right flipping.
+
+An added benefit is that these changes show that the ResNet architecture is robust to small hyperparameter tweaks.
 
 ## Pre-Trained weights
 
