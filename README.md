@@ -11,6 +11,10 @@ Reproduction of some of the results from the recent [MSRA ResNet](https://arxiv.
 
 **Note:** ResNet-110 is the stacked 3x3 filter variant and ResNet-164 is the 'botttleneck' architecture. Both use the new pre-activation units as proposed in the paper.
 
+### ResNet-110
+
+![ResNet-110](http://i.imgur.com/Y7VrxOC.png)
+
 ## Implementation details
 
 There are a few small differences in my implementation and that of the paper. I am using a smaller batch size because of hardware constraints, 32 instead of 128. I am also using a lower initial learning rate 0.01 instead of 0.1, I find it to be more stable. My data augmentation is exactly the same, only translations by padding then copping and left-right flipping.
