@@ -4,6 +4,8 @@ Reproduction of some of the results from the recent [MSRA ResNet](https://arxiv.
 
 ## Results
 
+Results are presented as classification error percent just like in the paper. 
+
 | ResNet Type | Original Paper | My Results |
 | -----------|-----------|----------- |
 | ResNet-110 | 6.37 | 6.38 |
@@ -13,7 +15,7 @@ Reproduction of some of the results from the recent [MSRA ResNet](https://arxiv.
 
 ### ResNet-110
 
-![ResNet-110](http://i.imgur.com/Y7VrxOC.png)
+![ResNet-110](http://i.imgur.com/UDGacHB.png)
 
 ## Implementation details
 
