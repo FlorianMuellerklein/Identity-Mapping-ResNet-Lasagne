@@ -15,7 +15,7 @@ Results are presented as classification error percent just like in the paper.
 
 ### ResNet-110
 
-![ResNet-110](http://i.imgur.com/UDGacHB.png)
+![ResNet-110](http://i.imgur.com/Y7VrxOC.png)
 
 ### ResNet-164
 
