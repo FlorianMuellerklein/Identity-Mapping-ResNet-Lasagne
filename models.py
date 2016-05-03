@@ -19,9 +19,6 @@ def ResNet_FullPreActivation(input_var=None, n=18):
     Adapted from https://github.com/Lasagne/Recipes/tree/master/papers/deep_residual_learning.
     Tweaked to be consistent with 'Identity Mappings in Deep Residual Networks', Kaiming He et al. 2016 (https://arxiv.org/abs/1603.05027)
 
-    Judging from https://github.com/KaimingHe/resnet-1k-layers/blob/master/resnet-pre-act.lua.
-    Number of filters go 16 -> 64 -> 128 -> 256
-
     Forumala to figure out depth: 6n + 2
     '''
     # create a residual learning building block with two stacked 3x3 convlayers as in paper
@@ -96,6 +93,9 @@ def ResNet_BottleNeck_FullPreActivation(input_var=None, n=18):
     '''
     Adapted from https://github.com/Lasagne/Recipes/tree/master/papers/deep_residual_learning.
     Tweaked to be consistent with 'Identity Mappings in Deep Residual Networks', Kaiming He et al. 2016 (https://arxiv.org/abs/1603.05027)
+
+    Judging from https://github.com/KaimingHe/resnet-1k-layers/blob/master/resnet-pre-act.lua.
+    Number of filters go 16 -> 64 -> 128 -> 256
 
     Forumala to figure out depth: 9n + 2
     '''
