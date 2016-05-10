@@ -58,13 +58,13 @@ def ResNet_FullPreActivation(input_var=None, n=18):
     # Building the network
     l_in = InputLayer(shape=(None, 3, PIXELS, PIXELS), input_var=input_var)
 
-    # first layer, output is 64 x 32 x 32
+    # first layer, output is 16 x 32 x 32
     l = batch_norm(ConvLayer(l_in, num_filters=16, filter_size=(3,3), stride=(1,1), nonlinearity=rectify, pad='same', W=he_norm))
 
     # first stack of residual blocks, output is 16 x 32 x 32
-    l = residual_bottleneck_block(l, first=True)
+    l = residual_block(l, first=True)
     for _ in range(1,n):
-        l = residual_bottleneck_block(l)
+        l = residual_block(l)
 
     # second stack of residual blocks, output is 32 x 16 x 16
     l = residual_block(l, increase_dim=True)
@@ -125,16 +125,16 @@ def ResNet_BottleNeck_FullPreActivation(input_var=None, n=18):
             bn_pre_relu = NonlinearityLayer(bn_pre_conv, rectify)
 
         # contains the weight -> BN -> ReLU portion, steps 3 to 5
-        conv_1 = batch_norm(ConvLayer(bn_pre_relu, num_filters=bottleneck_filters, filter_size=(1,1), stride=(1,1), nonlinearity=rectify, pad=0, W=he_norm))
+        conv_1 = batch_norm(ConvLayer(bn_pre_relu, num_filters=bottleneck_filters, filter_size=(1,1), stride=(1,1), nonlinearity=rectify, pad=1, W=he_norm))
 
         conv_2 = batch_norm(ConvLayer(conv_1, num_filters=bottleneck_filters, filter_size=(3,3), stride=first_stride, nonlinearity=rectify, pad=1, W=he_norm))
 
         # contains the last weight portion, step 6
-        conv_3 = ConvLayer(conv_2, num_filters=out_num_filters, filter_size=(1,1), stride=(1,1), nonlinearity=None, pad=0, W=he_norm)
+        conv_3 = ConvLayer(conv_2, num_filters=out_num_filters, filter_size=(1,1), stride=(1,1), nonlinearity=None, pad=1, W=he_norm)
 
         if increase_dim:
             # projection shortcut, as option B in paper
-            projection = ConvLayer(l, num_filters=out_num_filters, filter_size=(1,1), stride=(2,2), nonlinearity=None, pad=0, b=None)
+            projection = ConvLayer(l, num_filters=out_num_filters, filter_size=(1,1), stride=(2,2), nonlinearity=None, pad=1, b=None)
             block = ElemwiseSumLayer([conv_3, projection])
         else:
             block = ElemwiseSumLayer([conv_3, l])

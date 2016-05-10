@@ -17,11 +17,12 @@ from matplotlib import pyplot
 
 # training params
 ITERS = 200
-BATCHSIZE = 32
+BATCHSIZE = 64
 LR_SCHEDULE = {
     0: 0.01,
-    80: 0.001,
-    120: 0.0001
+    12: 0.1,
+    80: 0.01,
+    120: 0.001
 }
 
 """
@@ -70,7 +71,7 @@ load training data and start training
 train_X, test_X, train_y, test_y = load_pickle_data_cv()
 print 'Train shape:', train_X.shape, 'Test shape:', test_X.shape
 print 'Train y shape:', train_y.shape, 'Test y shape:', test_y.shape
-print np.amax(train_X)
+print np.amax(train_X), np.amin(train_X), np.mean(train_X)
 
 # loop over training functions for however many iterations, print information while training
 train_eval = []

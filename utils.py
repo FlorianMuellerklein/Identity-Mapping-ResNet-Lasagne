@@ -58,8 +58,15 @@ def load_pickle_data_cv():
 
     X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=0.1)
 
-    X_train = X_train.reshape(X_train.shape[0], 3, PIXELS, PIXELS).astype('float32') / 255.
-    X_test = X_test.reshape(X_test.shape[0], 3, PIXELS, PIXELS).astype('float32') / 255.
+    X_train = X_train.reshape(X_train.shape[0], 3, PIXELS, PIXELS).astype('float32')
+    X_test = X_test.reshape(X_test.shape[0], 3, PIXELS, PIXELS).astype('float32')
+
+    # subtract per-pixel mean
+    pixel_mean = np.mean(X_train, axis=0)
+    print pixel_mean
+    np.save('data/pixel_mean.npy', pixel_mean)
+    X_train -= pixel_mean
+    X_test -= pixel_mean
 
     return X_train, X_test, y_train, y_test
 
@@ -71,7 +78,10 @@ def load_pickle_data_test():
     test_y = dict_test['labels']
     test_y = np.hstack(test_y).astype('int32')
 
-    test_X = test_X.reshape(test_X.shape[0], 3, PIXELS, PIXELS).astype('float32') / 255.
+    test_X = test_X.reshape(test_X.shape[0], 3, PIXELS, PIXELS).astype('float32')
+
+    pixel_mean = np.load('data/pixel_mean.npy')
+    test_X -= pixel_mean
 
     return test_X, test_y
 
