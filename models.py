@@ -125,16 +125,16 @@ def ResNet_BottleNeck_FullPreActivation(input_var=None, n=18):
             bn_pre_relu = NonlinearityLayer(bn_pre_conv, rectify)
 
         # contains the weight -> BN -> ReLU portion, steps 3 to 5
-        conv_1 = batch_norm(ConvLayer(bn_pre_relu, num_filters=bottleneck_filters, filter_size=(1,1), stride=(1,1), nonlinearity=rectify, pad=1, W=he_norm))
+        conv_1 = batch_norm(ConvLayer(bn_pre_relu, num_filters=bottleneck_filters, filter_size=(1,1), stride=(1,1), nonlinearity=rectify, pad='same', W=he_norm))
 
-        conv_2 = batch_norm(ConvLayer(conv_1, num_filters=bottleneck_filters, filter_size=(3,3), stride=first_stride, nonlinearity=rectify, pad=1, W=he_norm))
+        conv_2 = batch_norm(ConvLayer(conv_1, num_filters=bottleneck_filters, filter_size=(3,3), stride=first_stride, nonlinearity=rectify, pad='same', W=he_norm))
 
         # contains the last weight portion, step 6
-        conv_3 = ConvLayer(conv_2, num_filters=out_num_filters, filter_size=(1,1), stride=(1,1), nonlinearity=None, pad=1, W=he_norm)
+        conv_3 = ConvLayer(conv_2, num_filters=out_num_filters, filter_size=(1,1), stride=(1,1), nonlinearity=None, pad='same', W=he_norm)
 
         if increase_dim:
             # projection shortcut, as option B in paper
-            projection = ConvLayer(l, num_filters=out_num_filters, filter_size=(1,1), stride=(2,2), nonlinearity=None, pad=1, b=None)
+            projection = ConvLayer(l, num_filters=out_num_filters, filter_size=(1,1), stride=(2,2), nonlinearity=None, pad='same', b=None)
             block = ElemwiseSumLayer([conv_3, projection])
         else:
             block = ElemwiseSumLayer([conv_3, l])
@@ -145,7 +145,7 @@ def ResNet_BottleNeck_FullPreActivation(input_var=None, n=18):
     l_in = InputLayer(shape=(None, 3, PIXELS, PIXELS), input_var=input_var)
 
     # first layer, output is 16x32x32
-    l = batch_norm(ConvLayer(l_in, num_filters=16, filter_size=(3,3), stride=(1,1), nonlinearity=rectify, pad=1, W=he_norm))
+    l = batch_norm(ConvLayer(l_in, num_filters=16, filter_size=(3,3), stride=(1,1), nonlinearity=rectify, pad='same', W=he_norm))
 
     # first stack of residual blocks, output is 64x32x32
     l = residual_bottleneck_block(l, first=True, increase_dim=True)
