@@ -105,10 +105,11 @@ def ResNet_BottleNeck_FullPreActivation(input_var=None, n=18):
         input_num_filters = l.output_shape[1]
 
         if increase_dim:
-            first_stride = (2,2)
             if first:
+                first_stride = (1,1)
                 out_num_filters = input_num_filters * 4
             else:
+                first_stride = (2,2)
                 out_num_filters = input_num_filters * 2
         else:
             first_stride = (1,1)
