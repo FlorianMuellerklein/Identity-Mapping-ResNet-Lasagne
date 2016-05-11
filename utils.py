@@ -1,28 +1,15 @@
 import random
 import cPickle
 import numpy as np
-import pandas as pd
-from scipy.linalg import eigh
-from scipy.linalg import svd
 
 from sklearn.utils import shuffle
-from sklearn.base import TransformerMixin, BaseEstimator
-from sklearn.preprocessing import LabelBinarizer, StandardScaler
 from sklearn.cross_validation import train_test_split
-from sklearn.manifold import TSNE
-
-from matplotlib import pyplot
-from skimage.io import imshow, imsave
-from skimage.util import crop
-from skimage import transform, filters, exposure
 
 PIXELS = 32
 PAD_CROP = 4
 PAD_PIXELS = PIXELS + (PAD_CROP * 2)
 imageSize = PIXELS * PIXELS
 num_features = imageSize * 3
-
-tsne = TSNE(verbose=1)
 
 def load_pickle_data_cv():
     fo_1 = open('data/cifar-10-batches-py/data_batch_1', 'rb')

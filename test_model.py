@@ -17,7 +17,7 @@ from lasagne.layers import helper
 from models import ResNet_FullPreActivation, ResNet_BottleNeck_FullPreActivation
 from utils import load_pickle_data_test
 
-BATCHSIZE = 32
+BATCHSIZE = 1
 
 '''
 Set up all theano functions
@@ -26,7 +26,7 @@ X = T.tensor4('X')
 Y = T.ivector('y')
 
 # set up theano functions to generate output by feeding data through network, any test outputs should be deterministic
-output_layer = ResNet_FullPreActivation(X)
+output_layer = ResNet_BottleNeck_FullPreActivation(X)
 output_test = lasagne.layers.get_output(output_layer, deterministic=True)
 
 output_class = T.argmax(output_test, axis=1)
@@ -41,7 +41,7 @@ Load data and make predictions
 test_X, test_y = load_pickle_data_test()
 
 # load network weights
-f = gzip.open('data/weights/resnet110_fullpreactivation.pklz', 'rb')
+f = gzip.open('data/weights/resnet164_fullpreactivation.pklz', 'rb')
 all_params = pickle.load(f)
 f.close()
 helper.set_all_param_values(output_layer, all_params)
