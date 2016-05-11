@@ -27,4 +27,4 @@ I am using a smaller batch size because of hardware constraints, 32 instead of 1
 
 ## Pre-Trained weights
 
-The weights of the trained networks are available for download.
+The weights of the trained networks are available for download. Weights are from an old try, may not load into current models in models.py. Will update when ResNet-164 matches results from paper.
