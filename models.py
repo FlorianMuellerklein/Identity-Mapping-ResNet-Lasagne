@@ -105,11 +105,10 @@ def ResNet_BottleNeck_FullPreActivation(input_var=None, n=18):
         input_num_filters = l.output_shape[1]
 
         if increase_dim:
+            first_stride = (2,2)
             if first:
-                first_stride = (1,1)
                 out_num_filters = input_num_filters * 4
             else:
-                first_stride = (2,2)
                 out_num_filters = input_num_filters * 2
         else:
             first_stride = (1,1)
@@ -135,8 +134,13 @@ def ResNet_BottleNeck_FullPreActivation(input_var=None, n=18):
 
         if increase_dim:
             # projection shortcut, as option B in paper
-            projection = ConvLayer(l, num_filters=out_num_filters, filter_size=(1,1), stride=(2,2), nonlinearity=None, pad='same', b=None)
-            block = ElemwiseSumLayer([conv_3, projection])
+            #projection = ConvLayer(l, num_filters=out_num_filters, filter_size=(1,1), stride=(2,2), nonlinearity=None, pad='same', b=None)
+            #block = ElemwiseSumLayer([conv_3, projection])
+
+            # identity shortcut, as option A in paper
+            identity = ExpressionLayer(l, lambda X: X[:, :, ::2, ::2], lambda s: (s[0], s[1], s[2]//2, s[3]//2))
+            padding = PadLayer(identity, [out_num_filters//4,0,0], batch_ndim=1)
+            block = ElemwiseSumLayer([conv_2, padding])
         else:
             block = ElemwiseSumLayer([conv_3, l])
 
@@ -147,6 +151,7 @@ def ResNet_BottleNeck_FullPreActivation(input_var=None, n=18):
 
     # first layer, output is 16x32x32
     l = batch_norm(ConvLayer(l_in, num_filters=16, filter_size=(3,3), stride=(1,1), nonlinearity=rectify, pad='same', W=he_norm))
+    l = MaxPool2DLayer(l, pool_size=2)
 
     # first stack of residual blocks, output is 64x32x32
     l = residual_bottleneck_block(l, first=True, increase_dim=True)

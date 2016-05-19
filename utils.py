@@ -72,17 +72,6 @@ def load_pickle_data_test():
 
     return test_X, test_y
 
-def plot_sample(img):
-    img = img.reshape(PIXELS, PIXELS, 3)
-    imshow(img)
-    #img = img / 290.
-    pyplot.show(block=True)
-
-def plot_grey(img):
-    imshow(img)
-    #img = img / 290.
-    pyplot.show(block=True)
-
 def batch_iterator_train_crop_flip(data, y, batchsize, train_fn):
     '''
     Data augmentation batch iterator for feeding images into CNN.
@@ -91,13 +80,14 @@ def batch_iterator_train_crop_flip(data, y, batchsize, train_fn):
     Flips image lr with probability 0.5.
     '''
     n_samples = data.shape[0]
-    data, y = shuffle(data, y)
+    # Shuffles indicies of traiing data, so we can draw batches from random indicies instead of shuffling whole data
+    indx = np.random.permutation(xrange(n_samples))
     loss = []
     acc_train = 0.
     for i in range((n_samples + batchsize - 1) // batchsize):
         sl = slice(i * batchsize, (i + 1) * batchsize)
-        X_batch = data[sl]
-        y_batch = y[sl]
+        X_batch = data[indx[sl]]
+        y_batch = y[indx[sl]]
 
         # pad and crop settings
         trans_1 = random.randint(0, (PAD_CROP*2))
