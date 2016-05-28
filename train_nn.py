@@ -10,7 +10,7 @@ import lasagne
 from lasagne.updates import nesterov_momentum, adam
 from lasagne.layers import helper
 
-from models import ResNet_FullPreActivation, ResNet_BottleNeck_FullPreActivation
+from models import ResNet_FullPreActivation, ResNet_FullPre_Wide
 from utils import load_pickle_data_cv, batch_iterator_valid, batch_iterator_train_crop_flip
 
 from matplotlib import pyplot
@@ -19,10 +19,10 @@ from matplotlib import pyplot
 ITERS = 200
 BATCHSIZE = 64
 LR_SCHEDULE = {
-    0: 0.01,
-    12: 0.1,
-    80: 0.01,
-    120: 0.001
+    0: 0.1,
+    60: 0.02,
+    120: 0.004,
+    160: 0.0008
 }
 
 """
@@ -33,7 +33,8 @@ Y = T.ivector('y')
 
 # set up theano functions to generate output by feeding data through network, any test outputs should be deterministic
 # load model
-output_layer = ResNet_BottleNeck_FullPreActivation(X)
+output_layer = ResNet_FullPre_Wide(X, n=4, k=10)
+
 # create outputs
 output_train = lasagne.layers.get_output(output_layer)
 output_test = lasagne.layers.get_output(output_layer, deterministic=True)
@@ -44,7 +45,7 @@ loss = loss.mean()
 
 # if using ResNet use L2 regularization
 all_layers = lasagne.layers.get_all_layers(output_layer)
-l2_penalty = lasagne.regularization.regularize_layer_params(all_layers, lasagne.regularization.l2) * 0.0001
+l2_penalty = lasagne.regularization.regularize_layer_params(all_layers, lasagne.regularization.l2) * 0.0005
 loss = loss + l2_penalty
 
 # set up loss functions for validation dataset
@@ -109,7 +110,7 @@ print "Final Acc:", best_acc
 
 # save weights
 all_params = helper.get_all_param_values(output_layer)
-f = gzip.open('data/weights/resnet164_fullpreactivation.pklz', 'wb')
+f = gzip.open('data/weights/wide_resnet_n4_k10.pklz', 'wb')
 pickle.dump(best_params, f)
 f.close()
 
@@ -126,6 +127,6 @@ pyplot.ylabel('Valid Acc Error (%)')
 pyplot.grid()
 pyplot.plot(valid_acc, label='Valid classification error (%)', color='#ED5724')
 pyplot.legend(loc=1)
-pyplot.savefig('plots/resnet164_fullpreactivation.png')
+pyplot.savefig('plots/wide_resnet_n4_k10.png')
 pyplot.clf()
 #pyplot.show()
