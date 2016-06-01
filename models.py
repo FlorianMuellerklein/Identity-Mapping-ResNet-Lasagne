@@ -137,7 +137,7 @@ def ResNet_BottleNeck_FullPreActivation(input_var=None, n=18):
 
         elif first:
             # projection shortcut, as option B in paper
-            projection = ConvLayer(l, num_filters=filters, filter_size=(1,1), stride=(1,1), nonlinearity=None, pad='same', b=None)
+            projection = ConvLayer(l, num_filters=out_num_filters, filter_size=(1,1), stride=(1,1), nonlinearity=None, pad='same', b=None)
             block = ElemwiseSumLayer([conv_3, projection])
 
         else:
