@@ -4,12 +4,12 @@ Reproduction of some of the results from the recent [MSRA ResNet](https://arxiv.
 
 ## Results
 
-Results are presented as classification error percent just like in the paper.
+Results are presented as classification error percent.
 
 | ResNet Type | Original Paper | My Results |
 | -----------|-----------|----------- |
 | ResNet-110 | 6.37 | 6.38 |
-| ResNet-164 | 5.46 | 6.07 |
+| ResNet-164 | 5.46 | 5.66 |
 
 **Note:** ResNet-110 is the stacked 3x3 filter variant and ResNet-164 is the 'botttleneck' architecture. Both use the new pre-activation units as proposed in the paper.
 
@@ -19,12 +19,12 @@ Results are presented as classification error percent just like in the paper.
 
 ### ResNet-164
 
-![ResNet-164](http://i.imgur.com/Zg8fJvX.png)
+![ResNet-164](http://i.imgur.com/VznjI5x.png)
 
 ## Implementation details
 
-I am using a smaller batch size because of hardware constraints, 32 instead of 128. My data augmentation is exactly the same, only translations by padding then copping and left-right flipping.
+I had to use batch sizes of 64 for ResNet-110 and 48 for ResNet-164 due to hardware constraints. My data augmentation is exactly the same, only translations by padding then copping and left-right flipping.
 
 ## Pre-Trained weights
 
-The weights of the trained networks are available for download. Weights are from an old try, may not load into current models in models.py. Will update when ResNet-164 matches results from paper.
+The weights of the trained networks are available for download. Weights for ResNet-110 are from an older slightly tweaked architecture, I need to re-run it and re-upload them.

@@ -80,7 +80,7 @@ def batch_iterator_train_crop_flip(data, y, batchsize, train_fn):
     Flips image lr with probability 0.5.
     '''
     n_samples = data.shape[0]
-    # Shuffles indicies of traiing data, so we can draw batches from random indicies instead of shuffling whole data
+    # Shuffles indicies of training data, so we can draw batches from random indicies instead of shuffling whole data
     indx = np.random.permutation(xrange(n_samples))
     loss = []
     acc_train = 0.

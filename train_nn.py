@@ -10,19 +10,19 @@ import lasagne
 from lasagne.updates import nesterov_momentum, adam
 from lasagne.layers import helper
 
-from models import ResNet_FullPreActivation, ResNet_FullPre_Wide
+from models import ResNet_FullPreActivation, ResNet_FullPre_Wide, ResNet_BottleNeck_FullPreActivation
 from utils import load_pickle_data_cv, batch_iterator_valid, batch_iterator_train_crop_flip
 
 from matplotlib import pyplot
 
 # training params
 ITERS = 200
-BATCHSIZE = 64
+BATCHSIZE = 48
 LR_SCHEDULE = {
-    0: 0.1,
-    60: 0.02,
-    120: 0.004,
-    160: 0.0008
+    0: 0.01,
+    10: 0.1,
+    80: 0.01,
+    120: 0.001,
 }
 
 """
@@ -33,7 +33,7 @@ Y = T.ivector('y')
 
 # set up theano functions to generate output by feeding data through network, any test outputs should be deterministic
 # load model
-output_layer = ResNet_FullPre_Wide(X, n=4, k=10)
+output_layer = ResNet_BottleNeck_FullPreActivation(X, n=18)
 
 # create outputs
 output_train = lasagne.layers.get_output(output_layer)
@@ -45,7 +45,7 @@ loss = loss.mean()
 
 # if using ResNet use L2 regularization
 all_layers = lasagne.layers.get_all_layers(output_layer)
-l2_penalty = lasagne.regularization.regularize_layer_params(all_layers, lasagne.regularization.l2) * 0.0005
+l2_penalty = lasagne.regularization.regularize_layer_params(all_layers, lasagne.regularization.l2) * 0.0001
 loss = loss + l2_penalty
 
 # set up loss functions for validation dataset
@@ -110,7 +110,7 @@ print "Final Acc:", best_acc
 
 # save weights
 all_params = helper.get_all_param_values(output_layer)
-f = gzip.open('data/weights/wide_resnet_n4_k10.pklz', 'wb')
+f = gzip.open('data/weights/bottleneck_resnet.pklz', 'wb')
 pickle.dump(best_params, f)
 f.close()
 
@@ -127,6 +127,6 @@ pyplot.ylabel('Valid Acc Error (%)')
 pyplot.grid()
 pyplot.plot(valid_acc, label='Valid classification error (%)', color='#ED5724')
 pyplot.legend(loc=1)
-pyplot.savefig('plots/wide_resnet_n4_k10.png')
+pyplot.savefig('plots/bottleneck_resnet.png')
 pyplot.clf()
 #pyplot.show()

@@ -26,7 +26,7 @@ X = T.tensor4('X')
 Y = T.ivector('y')
 
 # set up theano functions to generate output by feeding data through network, any test outputs should be deterministic
-output_layer = ResNet_BottleNeck_FullPreActivation(X)
+output_layer = ResNet_BottleNeck_FullPreActivation(X, n=18)
 output_test = lasagne.layers.get_output(output_layer, deterministic=True)
 
 output_class = T.argmax(output_test, axis=1)
