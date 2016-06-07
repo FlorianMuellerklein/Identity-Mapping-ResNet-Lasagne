@@ -1,3 +1,4 @@
+import sys
 import gzip
 import time
 import pickle
@@ -10,8 +11,18 @@ import lasagne
 from lasagne.updates import nesterov_momentum, adam
 from lasagne.layers import helper
 
-from models import ResNet_FullPreActivation, ResNet_FullPre_Wide, ResNet_BottleNeck_FullPreActivation
 from utils import load_pickle_data_cv, batch_iterator_valid, batch_iterator_train_crop_flip
+
+variant = sys.args[1] if len(sys.args) > 1 else 'normal'
+depth = int(sys.argv[2]) if len(sys.args) > 2 else 18
+if variant == 'normal':
+    from models import ResNet_FullPreActivation as ResNet
+elif variant == 'bottleneck':
+    from models import ResNet_BottleNeck_FullPreActivation as ResNet
+elif variant == 'wide':
+    from models import ResNet_FullPre_Wide as ResNet
+else
+    print ('Unsupported model %s' % variant)
 
 from matplotlib import pyplot
 
@@ -33,7 +44,7 @@ Y = T.ivector('y')
 
 # set up theano functions to generate output by feeding data through network, any test outputs should be deterministic
 # load model
-output_layer = ResNet_BottleNeck_FullPreActivation(X, n=18)
+output_layer = ResNet(X, depth)
 
 # create outputs
 output_train = lasagne.layers.get_output(output_layer)
@@ -110,7 +121,7 @@ print "Final Acc:", best_acc
 
 # save weights
 all_params = helper.get_all_param_values(output_layer)
-f = gzip.open('data/weights/bottleneck_resnet.pklz', 'wb')
+f = gzip.open('data/weights/%s%d_resnet.pklz'%(variant,depth), 'wb')
 pickle.dump(best_params, f)
 f.close()
 
@@ -127,6 +138,6 @@ pyplot.ylabel('Valid Acc Error (%)')
 pyplot.grid()
 pyplot.plot(valid_acc, label='Valid classification error (%)', color='#ED5724')
 pyplot.legend(loc=1)
-pyplot.savefig('plots/bottleneck_resnet.png')
+pyplot.savefig('plots/%s%d_resnet.png'%(variant,depth))
 pyplot.clf()
 #pyplot.show()
