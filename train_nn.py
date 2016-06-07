@@ -28,7 +28,7 @@ from matplotlib import pyplot
 
 # training params
 ITERS = 200
-BATCHSIZE = 48
+BATCHSIZE = 64
 LR_SCHEDULE = {
     0: 0.01,
     10: 0.1,
