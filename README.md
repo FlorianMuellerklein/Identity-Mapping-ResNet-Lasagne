@@ -43,7 +43,7 @@ train.py [type] [depth] [width]
 
 -**Depth (integer)**:  Serves as the multiplier for how many residual blocks to insert into each section of the network
 
--**Width (integer)**: For wide-ResNet, servers as the filter multiplier [3x3, 16*k] for residual blocks, excluding the first convolution layer.
+-**Width (integer)**: Only for wide-ResNet, servers as the filter multiplier [3x3, 16*k] for residual blocks, excluding the first convolution layer.
 
 | Group | Size | Multiplier |
 | ------|:------:|:----------:|
