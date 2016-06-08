@@ -13,18 +13,21 @@ from lasagne.layers import helper
 
 from utils import load_pickle_data_cv, batch_iterator_valid, batch_iterator_train_crop_flip
 
-variant = sys.args[1] if len(sys.args) > 1 else 'normal'
-depth = int(sys.argv[2]) if len(sys.args) > 2 else 18
+from matplotlib import pyplot
+
+variant = sys.argv[1] if len(sys.argv) > 1 else 'normal'
+depth = int(sys.argv[2]) if len(sys.argv) > 2 else 18
+width = int(sys.argv[3]) if len(sys.argv) > 3 else 1
+print 'Using %s ResNet with depth %d and width %d.'%(variant,depth,width)
+
 if variant == 'normal':
     from models import ResNet_FullPreActivation as ResNet
 elif variant == 'bottleneck':
     from models import ResNet_BottleNeck_FullPreActivation as ResNet
 elif variant == 'wide':
     from models import ResNet_FullPre_Wide as ResNet
-else
+else:
     print ('Unsupported model %s' % variant)
-
-from matplotlib import pyplot
 
 # training params
 ITERS = 200
@@ -44,7 +47,10 @@ Y = T.ivector('y')
 
 # set up theano functions to generate output by feeding data through network, any test outputs should be deterministic
 # load model
-output_layer = ResNet(X, depth)
+if width > 1:
+    output_layer = ResNet(X, n=depth, k=width)
+else:
+    output_layer = ResNet(X, n=depth)
 
 # create outputs
 output_train = lasagne.layers.get_output(output_layer)

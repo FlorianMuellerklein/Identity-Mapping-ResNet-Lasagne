@@ -23,8 +23,34 @@ Results are presented as classification error percent.
 
 ## Implementation details
 
-I had to use batch sizes of 64 for ResNet-110 and 48 for ResNet-164 due to hardware constraints. My data augmentation is exactly the same, only translations by padding then copping and left-right flipping.
+Had to use batch sizes of 64 for ResNet-110 and 48 for ResNet-164 due to hardware constraints. The data augmentation is exactly the same, only translations by padding then copping and left-right flipping.
 
 ## Pre-Trained weights
 
-The weights of the trained networks are available for download. Weights for ResNet-110 are from an older slightly tweaked architecture, I need to re-run it and re-upload them.
+The weights of the trained networks are available for download.
+
+## Running the networks
+
+To run your own PreResNet simply call train.py with system args defining the type and depth of the network.
+
+```
+train.py [type] [depth] [width]
+```
+
+Type is a string that can be 'normal', 'bottleneck' or 'wide'. Depth is an integer that serves as the multiplier for how many residual blocks to insert into each section of the network.
+
+| Group | Size | Multiplier |
+| ------|:------:|:----------:|
+| Conv1 | [3x3x16] | - |
+| Conv2 | [3x3x16]<br>[3x3x16] | N |
+| Conv3 | [3x3x32]<br>[3x3x32] | N |
+| Conv4 | [3x3x64]<br>[3x3x64] | N |
+| Avg-Pool | 8x8 | - |
+| Softmax  | 10 | - |
+
+**Note:** If using the wide-ResNet, the implementation in the (paper)[https://arxiv.org/pdf/1605.07146v1.pdf] will be slightly different than the one here. They use different preprocessing and a different value for L2. This repo stays consistent with the (MSRA paper)(https://arxiv.org/abs/1603.05027).
+
+### References
+
+* Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun, "Identity Mappings in Deep Residual Networks", [link](https://arxiv.org/pdf/1603.05027v2.pdf)
+* Sergey Zagoruyko, Nikos Komodakis, "Wide Residual Networks", [link](https://arxiv.org/pdf/1605.07146v1.pdf)
