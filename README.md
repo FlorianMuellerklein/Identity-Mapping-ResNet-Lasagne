@@ -38,7 +38,9 @@ train.py [type] [depth] [width]
 ```
 
 -**Type (string)**:  Can be 'normal', 'bottleneck' or 'wide'
+
 -**Depth (integer)**:  Serves as the multiplier for how many residual blocks to insert into each section of the network
+
 -**Width (integer)**  : For wide-ResNet servers as the filter multiplier [3x3x16*k]
 
 | Group | Size | Multiplier |
