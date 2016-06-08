@@ -48,7 +48,7 @@ Type is a string that can be 'normal', 'bottleneck' or 'wide'. Depth is an integ
 | Avg-Pool | 8x8 | - |
 | Softmax  | 10 | - |
 
-**Note:** If using the wide-ResNet, the implementation in the [paper][https://arxiv.org/pdf/1605.07146v1.pdf] will be slightly different than the one here. They use different preprocessing and a different value for L2. This repo stays consistent with the [MSRA paper](https://arxiv.org/abs/1603.05027).
+**Note:** If using the wide-ResNet, the implementation in the [paper](https://arxiv.org/pdf/1605.07146v1.pdf) will be slightly different than the one here. They use different preprocessing and a different value for L2. This repo stays consistent with the [MSRA paper](https://arxiv.org/abs/1603.05027).
 
 ### References
 
