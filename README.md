@@ -2,6 +2,8 @@
 
 Reproduction of some of the results from the recent [MSRA ResNet](https://arxiv.org/abs/1603.05027) paper. Exploring the full-preactivation style residual layers.
 
+![PreResNet](https://qiita-image-store.s3.amazonaws.com/0/100523/a156a5c2-026b-de55-a6fb-e4fa1772b42c.png)
+
 ## Results
 
 Results are presented as classification error percent.
