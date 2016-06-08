@@ -13,7 +13,7 @@ num_features = imageSize * 3
 
 # ##################### Load data from CIFAR-10 dataset #######################
 # this code assumes the cifar dataset from 'https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz'
-# has been extracted in data directory
+# has been extracted in a 'data' folder within the working directory
 
 def load_pickle_data_cv():
     fo_1 = open('data/cifar-10-batches-py/data_batch_1', 'rb')
