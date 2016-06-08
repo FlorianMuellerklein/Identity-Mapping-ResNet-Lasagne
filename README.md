@@ -36,7 +36,7 @@ The weights of the trained networks are available for download.
 To run your own PreResNet simply call train.py with system args defining the type and depth of the network.
 
 ```
-train.py [type] [depth] [width]
+train_nn.py [type] [depth] [width]
 ```
 
 -**Type (string)**:  Can be 'normal', 'bottleneck' or 'wide'
