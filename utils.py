@@ -11,6 +11,10 @@ PAD_PIXELS = PIXELS + (PAD_CROP * 2)
 imageSize = PIXELS * PIXELS
 num_features = imageSize * 3
 
+# ##################### Load data from CIFAR-10 dataset #######################
+# this code assumes the cifar dataset from 'https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz'
+# has been extracted in data directory
+
 def load_pickle_data_cv():
     fo_1 = open('data/cifar-10-batches-py/data_batch_1', 'rb')
     fo_2 = open('data/cifar-10-batches-py/data_batch_2', 'rb')
