@@ -66,9 +66,7 @@ The extracted 'cifar-10-batches-py' from https://www.cs.toronto.edu/~kriz/cifar-
  |__ data
      |__cifar-10-batches-py
         |__ data_batch_1
-        |
         |__ data_batch_2
-        |
         |__ ...
      |__weights
         |__ resnet164_fullpreactivation.pklz
