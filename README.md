@@ -1,6 +1,6 @@
 # Identity Mappings in Deep Residual Networks in Lasagne/Theano
 
-Reproduction of some of the results from the recent [MSRA ResNet](https://arxiv.org/abs/1603.05027) paper. Exploring the full-preactivation style residual layers. Luckily this paper was done on CIFAR-10 so I am able to recreate the results, my poor computer can't handle ResNets with ImageNet.
+Reproduction of some of the results from the recent [MSRA ResNet](https://arxiv.org/abs/1603.05027) paper. Exploring the full-preactivation style residual layers.
 
 ## Results
 
@@ -48,7 +48,7 @@ Type is a string that can be 'normal', 'bottleneck' or 'wide'. Depth is an integ
 | Avg-Pool | 8x8 | - |
 | Softmax  | 10 | - |
 
-**Note:** If using the wide-ResNet, the implementation in the (paper)[https://arxiv.org/pdf/1605.07146v1.pdf] will be slightly different than the one here. They use different preprocessing and a different value for L2. This repo stays consistent with the (MSRA paper)(https://arxiv.org/abs/1603.05027).
+**Note:** If using the wide-ResNet, the implementation in the [paper][https://arxiv.org/pdf/1605.07146v1.pdf] will be slightly different than the one here. They use different preprocessing and a different value for L2. This repo stays consistent with the [MSRA paper](https://arxiv.org/abs/1603.05027).
 
 ### References
 
