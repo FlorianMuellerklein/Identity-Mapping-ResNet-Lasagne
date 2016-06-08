@@ -41,14 +41,14 @@ train.py [type] [depth] [width]
 
 -**Depth (integer)**:  Serves as the multiplier for how many residual blocks to insert into each section of the network
 
--**Width (integer)**  : For wide-ResNet servers as the filter multiplier [3x3x16*k]
+-**Width (integer)**: For wide-ResNet, servers as the filter multiplier [3x3, 16*k] for residual blocks, excluding the first convolution layer.
 
 | Group | Size | Multiplier |
 | ------|:------:|:----------:|
-| Conv1 | [3x3x16] | - |
-| Conv2 | [3x3x16]<br>[3x3x16] | N |
-| Conv3 | [3x3x32]<br>[3x3x32] | N |
-| Conv4 | [3x3x64]<br>[3x3x64] | N |
+| Conv1 | [3x3, 16] | - |
+| Conv2 | [3x3, 16]<br>[3x3, 16] | N |
+| Conv3 | [3x3, 32]<br>[3x3, 32] | N |
+| Conv4 | [3x3, 64]<br>[3x3, 64] | N |
 | Avg-Pool | 8x8 | - |
 | Softmax  | 10 | - |
 
