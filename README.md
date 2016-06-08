@@ -54,6 +54,28 @@ train.py [type] [depth] [width]
 | Avg-Pool | 8x8 | - |
 | Softmax  | 10 | - |
 
+The extracted 'cifar-10-batches-py' from https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz must be extracted into a 'data' folder within the working directory.
+
+
+```
+ PreResNet Directory
+ |__ test_model.py
+ |__ train_nn.py
+ |__ models.py
+ |__ utils.py
+ |__ data
+     |__cifar-10-batches-py
+        |__ data_batch_1
+        |
+        |__ data_batch_2
+        |
+        |__ ...
+     |__weights
+        |__ resnet164_fullpreactivation.pklz
+        |__ resnet110_fullpreactivation.pklz
+```
+
+
 **Note:** If using the wide-ResNet, the implementation in the [paper](https://arxiv.org/pdf/1605.07146v1.pdf) will be slightly different than the one here. They use different preprocessing and a different value for L2. This repo stays consistent with the [MSRA paper](https://arxiv.org/abs/1603.05027).
 
 ### References
