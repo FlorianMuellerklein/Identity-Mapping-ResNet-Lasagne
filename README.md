@@ -1,6 +1,6 @@
 # Identity Mappings in Deep Residual Networks in Lasagne/Theano
 
-Reproduction of some of the results from the recent [MSRA ResNet](https://arxiv.org/abs/1603.05027) paper and the followup [Wide-Resnet](https://arxiv.org/pdf/1605.07146v1.pdf) paper. Exploring the full-preactivation style residual layers, both normal and wide.
+Reproduction of some of the results from the recent [MSRA ResNet](https://arxiv.org/abs/1603.05027) paper and the follow-up [Wide-Resnet](https://arxiv.org/pdf/1605.07146v1.pdf) paper. Exploring the full-preactivation style residual layers, both normal and wide.
 
 ![PreResNet](https://qiita-image-store.s3.amazonaws.com/0/100523/a156a5c2-026b-de55-a6fb-e4fa1772b42c.png) ![WideResNet](http://i.imgur.com/3b0fw7b.png)
 
