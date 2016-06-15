@@ -1,19 +1,20 @@
 # Identity Mappings in Deep Residual Networks in Lasagne/Theano
 
-Reproduction of some of the results from the recent [MSRA ResNet](https://arxiv.org/abs/1603.05027) paper. Exploring the full-preactivation style residual layers.
+Reproduction of some of the results from the recent [MSRA ResNet](https://arxiv.org/abs/1603.05027) paper and the followup [Wide-Resnet](https://arxiv.org/pdf/1605.07146v1.pdf) paper. Exploring the full-preactivation style residual layers, both normal and wide.
 
-![PreResNet](https://qiita-image-store.s3.amazonaws.com/0/100523/a156a5c2-026b-de55-a6fb-e4fa1772b42c.png)
+![PreResNet](https://qiita-image-store.s3.amazonaws.com/0/100523/a156a5c2-026b-de55-a6fb-e4fa1772b42c.png =150x150) ![WideResNet](http://i.imgur.com/WqeGBCR.png =150x150)
 
 ## Results
 
 Results are presented as classification error percent.
 
-| ResNet Type | Original Paper | My Results |
+| ResNet Type | Original Paper | Test Results |
 | -----------|-----------|----------- |
 | ResNet-110 | 6.37 | 6.38 |
 | ResNet-164 | 5.46 | 5.66 |
+| Wide-ResNet | 5.55 | 5.41 |
 
-**Note:** ResNet-110 is the stacked 3x3 filter variant and ResNet-164 is the 'botttleneck' architecture. Both use the new pre-activation units as proposed in the paper.
+**Note:** ResNet-110 is the stacked 3x3 filter variant and ResNet-164 is the 'botttleneck' architecture. Both use the new pre-activation units as proposed in the paper. For Wide-ResNet the paper and test results are for depth 16 and width multiplier of 4. This repo also uses the preprocessing and training parameters from the Preactivation-ResNet paper and not the Wide-ResNet paper, so it is not a 1 to 1 comparison with the Wide-ResNet paper results
 
 ### ResNet-110
 
@@ -22,6 +23,10 @@ Results are presented as classification error percent.
 ### ResNet-164
 
 ![ResNet-164](http://i.imgur.com/VznjI5x.png)
+
+### Wide-ResNet Depth-16 Width-4
+
+![Wide-ResNet](http://i.imgur.com/IuBppdJ.png)
 
 ## Implementation details
 
@@ -37,6 +42,12 @@ To run your own PreResNet simply call train.py with system args defining the typ
 
 ```
 train_nn.py [type] [depth] [width]
+```
+
+Testing the accuracy on the test set can be done in a very similar way.
+
+```
+test_model.py [type] [depth] [width]
 ```
 
 -**Type (string)**:  Can be 'normal', 'bottleneck' or 'wide'
