@@ -1,4 +1,5 @@
 import os
+import sys
 import gzip
 import time
 import pickle
@@ -14,8 +15,21 @@ import lasagne
 from lasagne.updates import nesterov_momentum, adam
 from lasagne.layers import helper
 
-from models import ResNet_FullPreActivation, ResNet_BottleNeck_FullPreActivation
 from utils import load_pickle_data_test
+
+variant = sys.argv[1] if len(sys.argv) > 1 else 'normal'
+depth = int(sys.argv[2]) if len(sys.argv) > 2 else 18
+width = int(sys.argv[3]) if len(sys.argv) > 3 else 1
+print 'Using %s ResNet with depth %d and width %d.'%(variant,depth,width)
+
+if variant == 'normal':
+    from models import ResNet_FullPreActivation as ResNet
+elif variant == 'bottleneck':
+    from models import ResNet_BottleNeck_FullPreActivation as ResNet
+elif variant == 'wide':
+    from models import ResNet_FullPre_Wide as ResNet
+else:
+    print ('Unsupported model %s' % variant)
 
 BATCHSIZE = 1
 
@@ -26,7 +40,11 @@ X = T.tensor4('X')
 Y = T.ivector('y')
 
 # set up theano functions to generate output by feeding data through network, any test outputs should be deterministic
-output_layer = ResNet_BottleNeck_FullPreActivation(X, n=18)
+# load model
+if width > 1:
+    output_layer = ResNet(X, n=depth, k=width)
+else:
+    output_layer = ResNet(X, n=depth)
 output_test = lasagne.layers.get_output(output_layer, deterministic=True)
 
 output_class = T.argmax(output_test, axis=1)
@@ -41,7 +59,7 @@ Load data and make predictions
 test_X, test_y = load_pickle_data_test()
 
 # load network weights
-f = gzip.open('data/weights/resnet164_fullpreactivation.pklz', 'rb')
+f = gzip.open('data/weights/%s%d_resnet.pklz'%(variant,depth), 'rb')
 all_params = pickle.load(f)
 f.close()
 helper.set_all_param_values(output_layer, all_params)
@@ -64,4 +82,4 @@ for i in range(pred_labels.shape[0]):
     if test_y[i] == pred_labels[i]:
         same += 1
 
-print('Percent same, ', (float(same) / float(pred_labels.shape[0])))
+print('Accuracy on the testing set, ', (float(same) / float(pred_labels.shape[0])))
