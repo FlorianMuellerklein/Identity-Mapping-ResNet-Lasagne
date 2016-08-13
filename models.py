@@ -48,7 +48,7 @@ def ResNet_FullPreActivation(input_var=None, n=18):
         # add shortcut connections
         if increase_dim:
             # projection shortcut, as option B in paper
-            projection = ConvLayer(l, num_filters=out_num_filters, filter_size=(1,1), stride=(2,2), nonlinearity=None, pad='same', b=None)
+            projection = ConvLayer(bn_pre_relu, num_filters=out_num_filters, filter_size=(1,1), stride=(2,2), nonlinearity=None, pad='same', b=None)
             block = ElemwiseSumLayer([conv_2, projection])
         else:
             block = ElemwiseSumLayer([conv_2, l])
@@ -132,7 +132,7 @@ def ResNet_BottleNeck_FullPreActivation(input_var=None, n=18):
 
         if increase_dim:
             # projection shortcut, as option B in paper
-            projection = ConvLayer(l, num_filters=out_num_filters, filter_size=(1,1), stride=(2,2), nonlinearity=None, pad='same', b=None)
+            projection = ConvLayer(bn_pre_relu, num_filters=out_num_filters, filter_size=(1,1), stride=(2,2), nonlinearity=None, pad='same', b=None)
             block = ElemwiseSumLayer([conv_3, projection])
 
         elif first:
@@ -209,15 +209,15 @@ def ResNet_FullPre_Wide(input_var=None, n=6, k=4):
         # contains the weight -> BN -> ReLU portion, steps 3 to 5
         conv_1 = batch_norm(ConvLayer(bn_pre_relu, num_filters=filters, filter_size=(3,3), stride=first_stride, nonlinearity=rectify, pad='same', W=he_norm))
 
-        dropout = DropoutLayer(conv_1, p=0.3)
+        #dropout = DropoutLayer(conv_1, p=0.3)
 
         # contains the last weight portion, step 6
-        conv_2 = ConvLayer(dropout, num_filters=filters, filter_size=(3,3), stride=(1,1), nonlinearity=None, pad='same', W=he_norm)
+        conv_2 = ConvLayer(conv_1, num_filters=filters, filter_size=(3,3), stride=(1,1), nonlinearity=None, pad='same', W=he_norm)
 
         # add shortcut connections
         if increase_dim:
             # projection shortcut, as option B in paper
-            projection = ConvLayer(l, num_filters=filters, filter_size=(1,1), stride=(2,2), nonlinearity=None, pad='same', b=None)
+            projection = ConvLayer(bn_pre_relu, num_filters=filters, filter_size=(1,1), stride=(2,2), nonlinearity=None, pad='same', b=None)
             block = ElemwiseSumLayer([conv_2, projection])
 
         elif first:
